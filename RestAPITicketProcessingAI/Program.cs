@@ -1,3 +1,6 @@
+using RestAPITicketProcessingAI.Models.DeepSeekEntitys;
+using RestAPITicketProcessingAI.Models.DeepSeekLogic;
+
 namespace RestAPITicketProcessingAI;
 
 public class Program
@@ -8,6 +11,15 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
+
+        var deepSeekSettings = new DeepSeekSettings
+        {
+            ApiKey = builder.Configuration.GetValue<string>("DeepSeek:ApiKey"),
+            ModelName = builder.Configuration.GetValue<string>("DeepSeek:ModelName"),
+            SystemRoleDefinition = builder.Configuration.GetValue<string>("DeepSeek:SystemRoleDefinition")
+            
+        };
+        DeepSeekConnection.deepSeekSettings = deepSeekSettings;
 
         var app = builder.Build();
 
